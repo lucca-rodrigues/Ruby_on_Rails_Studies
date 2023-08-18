@@ -23,3 +23,30 @@
 - 500 = Internal server error
 
 Reference link: https://httpstatuses.io/
+
+## On rails
+
+- To use the status code on reais use the infos on website to specifc status code
+- Example:
+
+```ruby
+# POST /contacts
+  def create
+    @contact = Contact.new(contact_params)
+
+    if @contact.save
+      render json: @contact, status: :created, location: @contact
+    else
+      render json: @contact.errors, status: :unprocessable_entity
+    end
+  end
+
+  # PATCH/PUT /contacts/1
+  def update
+    if @contact.update(contact_params)
+      render json: @contact
+    else
+      render json: @contact.errors, status: :unprocessable_entity
+    end
+  end
+```
